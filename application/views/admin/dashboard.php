@@ -43,9 +43,33 @@
           <li class="active ">
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
-              <p>Daftar dosen</p>
+              <p>Daftar Dosen</p>
             </a>
           </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
+              <i></i>
+              <p>Tambah Dosen</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/staff') ?>">
+              <i></i>
+              <p>Daftar Staff</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/tambahstaff') ?>">
+              <i></i>
+              <p>Tambah Staff</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/absensi') ?>">
+              <i></i>
+              <p>Absensi</p>
+            </a>
+          </li>                                            
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -124,10 +148,10 @@
                                     <input type="hidden" name="ttl" value="<?php echo $dosen->ttl; ?>" required>
                                     <input type="hidden" name="nohp" value="<?php echo $dosen->nohp; ?>" required>
                                     <input type="hidden" name="gaji" value="<?php echo $dosen->gaji; ?>" required>
-                                    <input type="hidden" name="id_fakultas" value="<?php echo $dosen->id_fakultas; ?>" required>
+                                    <input type="hidden" name="fakultas" value="<?php echo $dosen->id_fakultas; ?>" required>
                                   </span>
                                   </br>
-                                  <span><input type="submit" class="btn btn-block" name="hapus" value="Update"></span>
+                                  <span><input type="submit" class="btn btn-block" name="update" value="Update"></span>
                                <?php echo form_close(); ?>                               
                               </td>
                             </tr>
@@ -136,10 +160,6 @@
                         Tidak ada data!
                       <?php endif; ?>
                     <?php endif; ?>
-                        
-
-
-                     
                     </tbody>
                   </table>
                 </div>
@@ -178,32 +198,6 @@
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script type="text/javascript">
- $(document).ready(function(){
-    $("table").effect("slide", "slow");
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
- $(".urldelete").click(function( event ){
-      var nip_dosen = $(event.currentTarget).attr("data-key");
-      $.ajax({
-         type:'get',
-         dataType: 'json',
-         url: 'http://localhost:8000/api/v1/hr/Dosen/removeDosen/'+nip_dosen,
-         success:function (dt) {
-          alert("AJAX request successfully completed");
-          window.location.reload(true);
-         },
-         error: function(e){
-          alert("AJAX request NOT successfully completed");
-          window.location.reload(true);
-          console.log("Gagal Hapus");
-         }
-     });
- }); 
-
-
-</script>  
 </body>
 
 </html>

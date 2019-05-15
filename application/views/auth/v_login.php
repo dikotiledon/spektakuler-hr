@@ -44,7 +44,7 @@
                                     </div>
                                     <form method="post" role="form" class="user form-signin form-group" action="<?php echo base_url('cakun/aksi_login/'); ?>" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="nimnip" name="nimnip" placeholder="Enter NIM/NIP...">
+                                            <input type="text" class="form-control form-control-user" id="nimnip" name="nimnip" placeholder="Enter NIM/NIP..." max="8">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login

@@ -4,11 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 class cakun extends CI_Controller {
+private $urldosen = 'http://localhost:8000/api/v1/hr/Dosen';
+private $urlfakultas = 'http://localhost:8000/api/v1/hr/Fakultas';
+private $urlstaff = 'http://localhost:8000/api/v1/hr/Staff';
+private $urladmin = 'http://localhost:8000/api/v1/hr/Admin';	
 	public function __construct()
 	{	
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('Akun');
+		$this->load->helper('text');
+		$this->load->helper('url');
+		$this->load->model('mdosen');
+		$this->load->helper('form');		
 	}
 
 	public function index()
@@ -18,182 +26,92 @@ class cakun extends CI_Controller {
 			redirect('indexadmin');
 		}elseif ($this->session->userdata('logged') == 'login' && $this->session->userdata('logged_as') == 'dosen') {
 			redirect('indexdosen');
-		}elseif ($this->session->userdata('logged') == 'Slogin' && $this->session->userdata('logged_as') == 'staff') {
+		}elseif ($this->session->userdata('logged') == 'login' && $this->session->userdata('logged_as') == 'staff') {
 			redirect('indexstaff');
 		}else{
 			$this->load->view('auth/v_login');
 		}
 	}
-	function aksi_login(){
-		$nip = $this->input->post('nimnip');
+	private function retrieveAkun($nip) {
 		$result = substr($nip, 0, 2);
 		if (strpos($result, '23') !== false) {
-			$where = array(
-				'nip_admin' => $nip
-				);			
-			$cek = $this->Akun->cek_login("hr_admin",$where);
-			if($cek){
-				$data_session = array(
-					'nama' => $nip,
-					'id_fakultas' => $cek->id_fakultas,
-					'logged' => "login",
-					'logged_as' => "admin"
-					);
-			}else{
-				redirect(base_url(), 'refresh');
-			}		    
+			$api = curl_init();
+			curl_setopt($api, CURLOPT_URL, $this->urladmin . '/Show/'.$nip);
+			curl_setopt($api, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($api, CURLOPT_HEADER, false);
+			$result = curl_exec($api);
+			$result = json_decode($result,true);
+			curl_close($api);
+			return $result;
+
 		}elseif (strpos($result, '98') !== false) {
-			$where = array(
-				'nip_staff' => $nip
-				);			
-			$cek = $this->Akun->cek_login("hr_staff",$where)->num_rows();
-			if($cek > 0){
-				$data_session = array(
-					'nama' => $nip,
-					'logged' => "login",
-					'logged_as' => "staff"
-					);
-			}else{
-				redirect(base_url(), 'refresh');
-			}				
-		}elseif (strpos($result, '1') !== false) {
-			$where = array(
-				'nip_dosen' => $nip
-				);			
-			$cek = $this->Akun->cek_login("hr_dosen",$where)->num_rows();
-			if($cek > 0){
-				$data_session = array(
-					'nama' => $nip,
-					'logged' => "login",
-					'logged_as' => "dosen"
-					);
-			}else{
-				redirect(base_url(), 'refresh');
-			}				
+			$api = curl_init();
+			curl_setopt($api, CURLOPT_URL, $this->urlstaff . '/Show/'.$nip);
+			curl_setopt($api, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($api, CURLOPT_HEADER, false);
+
+			$result = curl_exec($api);
+			$result = json_decode($result,true);
+			curl_close($api);
+			return $result;
+		}elseif (strpos($result, '12') !== false) {
+			$api = curl_init();
+			curl_setopt($api, CURLOPT_URL, $this->urldosen . '/Show/'.$nip);
+			curl_setopt($api, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($api, CURLOPT_HEADER, false);
+			$result = curl_exec($api);
+			$result = json_decode($result,true);
+			curl_close($api);
+			return $result;
 		}
-		$this->session->set_userdata($data_session);
-		if ($this->session->userdata('logged_as') == 'admin') {
-			echo "<script>alert('Berhasil Login!');</script>";
+
+		// $api = curl_init();
+		// curl_setopt($api, CURLOPT_URL, $this->urldosen . '/Show/'.$nip);
+		// curl_setopt($api, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($api, CURLOPT_HEADER, false);
+
+		// $result = curl_exec($api);
+		// $result = json_decode($result);
+		// curl_close($api);
+		// return $result;
+	 }
+	public function aksi_login(){
+		$nip = $this->input->post('nimnip');
+		$auth = $this->retrieveAkun($nip);
+	    $data = [
+	      'authenticate' => 'Login',
+	      'json' => $auth,
+	    ];
+	    if (isset($auth['data'][0]['nip_admin'])) {
+	    	$data_session = array(
+			'nip' => $nip,
+			'id_fakultas' => $auth['data'][0]['id_fakultas'],
+			'logged' => "login",
+			'logged_as' => "admin"
+			);
+			$this->session->set_userdata($data_session);
 			redirect('indexadmin/index', 'refresh');
-		}
-		// if($cek > 0){
- 
-		// 	$data_session = array(
-		// 		'nama' => $username,
-		// 		'logged' => "login"
-		// 		);
- 
-		// 	$this->session->set_userdata($data_session);
-		// 	echo "<script>alert('Berhasil Login!');</script>";
-		// 	redirect(base_url(""), 'refresh');
- 
-		// }else{
-		// 	echo "Username dan password salah !";
-		// }
+
+	    }elseif (isset($auth['data'][0]['nip_dosen'])) {
+	    	$data_session = array(
+			'nip' => $nip,
+			'id_fakultas' => $auth['data'][0]['id_fakultas'],
+			'logged' => "login",
+			'logged_as' => "dosen"
+			);
+			$this->session->set_userdata($data_session);
+			redirect('indexdosen/index', 'refresh');
+
+	    }elseif (isset($auth['data'][0]['nip_staff'])) {
+	    	$data_session = array(
+			'nip' => $nip,
+			'id_fakultas' => $auth['data'][0]['id_fakultas'],
+			'logged' => "login",
+			'logged_as' => "staff"
+			);
+			$this->session->set_userdata($data_session);
+	    }
 	}
-// 	//Indah Ayu NF_1301164004
-// 	public function v_regist()
-// 	{
-// 		$this->load->view('v_register');
-// 	}
-
-
-// 	//Indah Ayu NF_1301164004
-// 	public function daftar_akun()
-// 	{
-// 		$data = new stdClass();
-// 		$this->load->helper('form');
-// 		$this->load->library('form_validation');
-// 		$this->load->model('Akun');
-// 		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|min_length[4]|is_unique[account.username]', array('is_unique' => 'This username already exists. Please choose another one.'));
-// 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]');
-
-// 		if ($this->form_validation->run() === false) {
-// 			echo "<script>alert('Gagal Register!');</script>";
-// 			redirect(base_url(""), 'refresh');
-
-
-			
-// 		} else {
-
-// 		$username = $this->input->post('username');
-// 		$password = $this->input->post('password');
-// 		$nama = $this->input->post('nama');
-// 		$data = array(
-// 			'username' => $username,
-// 			'password' => $password,
-// 			'nama'     => $nama	
-// 		);
-// 		$insert = $this->Akun->daftar_akun($data);
-// 			if ($insert) {
-				
-// 				// user creation ok
-// 			echo "<script>alert('Berhasil Login!');</script>";
-// 			redirect(base_url(""), 'refresh');
-				
-// 			} else {
-				
-// 			echo "<script>alert('Gagal Register!');</script>";
-// 			redirect(base_url(""), 'refresh');
-				
-// 			}
-			
-// 		}
-
-// 	}
-
-// 	//Indah Ayu NF_1301164004
-// 	public function cek_login()
-// 	{
-// 		$data = $this->input->post(null, TRUE);
-// 		$login = $this->Akun->login_akun($data);
-// 		if($login) {
-// 			$newdata = array(
-// 				'logged' => 'Sudah Login',
-// 				'username' => $login->username,
-// 				'password' => $login->password,
-// 				'email' => $login->email,
-// 				'name' => $login->name,
-// 			);
-// 			$this->session->set_userdata($newdata);
-// 			redirect('c_akun/index');
-// 		} else {
-// 			$this->session->set_flashdata('info','gagal_login');
-// 			redirect('home/materi');
-// 		}
-// 	}
-
-// 	//Riandi Kartiko_1301164300
-// 	public function edit_dataakun(){
-// 		if ($this->input->post('submit')) {
-
-// 		      $password = $this->input->post('password');
-// 		      $namalengkap = $this->input->post('namalengkap');
-// 		      $email = $this->input->post('email');
-// 		      $alamat = $this->input->post('alamat');
-
-// 			 $diupdate = $this->Akun->updateAkun($this->session->userdata('username'),$namalengkap,$password,$email,$alamat);
-// 				if($diupdate)
-// 				{	
-// /*							$newdata = array(
-// 							'logged' => 'Sudah Login',
-// 							'username' => $this->session->userdata('username'),
-// 							'password' => $password,
-// 							'email' => $email,
-// 							'name' => $namalengkap,
-// 							'address' => $alamat,
-// 							'img' => 'default.svg'
-// 						);
-// 				$this->session->set_userdata($newdata);*/
-// 					redirect('c_akun/index');
-
-// 				}else{
-// 					$this->session->set_flashdata('info','gagal_update');
-// 					redirect('c_akun/index');
-// 				}
-// 		}
-//     }
-
 	public function logout() {
 		$this->session->sess_destroy();
 		redirect(base_url(),'refresh');
