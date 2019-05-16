@@ -110,6 +110,8 @@ private $urladmin = 'http://localhost:8000/api/v1/hr/Admin';
 			'logged_as' => "staff"
 			);
 			$this->session->set_userdata($data_session);
+	    }else{
+	    	redirect(base_url(), 'refresh');
 	    }
 	}
 	public function logout() {
