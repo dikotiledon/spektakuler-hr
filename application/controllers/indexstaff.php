@@ -27,7 +27,7 @@ class indexstaff extends CI_Controller
 		);
 		$this->retrieveabsen($data);
 		echo "<script>alert('Berhasil Absen!');</script>";
-		redirect(base_url('indexdosen/index'),'refresh');
+		redirect(base_url('indexstaff/index'),'refresh');
 
 	}
 	private function retrieveabsen($data)
@@ -57,7 +57,7 @@ class indexstaff extends CI_Controller
 		        'title' => 'Daftar Cuti',
 		        'json' => $cuti,
 		      ];
-		      $this->load->view('dosen/listcuti', $data);
+		      $this->load->view('staff/listcuti', $data);
 		    }
 		}		
 	}
@@ -88,7 +88,7 @@ class indexstaff extends CI_Controller
 
 		if ($rentangtanggal == NULL) {
 			echo "<script>alert('gagal!');</script>";
-			redirect(base_url('indexdosen/index'),'refresh');
+			redirect(base_url('indexstaff/index'),'refresh');
 		}else{
 			$data = array(
 				'jeniscuti' => $this->input->post('jeniscuti'),
@@ -100,7 +100,7 @@ class indexstaff extends CI_Controller
 			);
 			$this->retrievecuti($data);
 			echo "<script>alert('Berhasil!');</script>";
-			redirect(base_url('indexdosen/index'),'refresh');
+			redirect(base_url('indexstaff/index'),'refresh');
 		}
 
 	}

@@ -79,7 +79,7 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
-            <a href="<?php echo base_url('indexdosen') ?>">
+            <a href="<?php echo base_url('indexstaff') ?>">
               <i></i>
               <p>Dashboard</p>
             </a>
@@ -221,7 +221,7 @@
                                                   <form>                 
                                                         <div class="form-group">
                                                           <label for="exampleFormControlInput1">NIP Staff</label>
-                                                          <input type="number" name="nip" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" value="<?php echo $this->session->userdata('nip'); ?>" readonly>
+                                                          <input type="number" name="nip" class="form-control" id="exampleFormControlInput1" placeholder="NIP Staff" value="<?php echo $this->session->userdata('nip'); ?>" readonly>
                                                         </div>                    
                                                         <div class="form-group">
                                                           <label for="exampleFormControlInput1">Nama Staff</label>
