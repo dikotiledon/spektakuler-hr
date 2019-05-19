@@ -8,6 +8,7 @@
 		private $urlfakultas = 'http://localhost:8000/api/v1/hr/Fakultas';
 		private $urlstaff = 'http://localhost:8000/api/v1/hr/Staff';
 		private $urlabsen = 'http://localhost:8000/api/v1/hr/Absen';
+		private $urlcuti = 'http://localhost:8000/api/v1/hr/Cuti';
 
 		public function __construct(){
 			parent::__construct();
@@ -40,7 +41,7 @@
 			        'title' => 'Daftar Staff',
 			        'json' => $staff,
 			      ];
-			      $this->load->view('staff/staff', $data);
+			      $this->load->view('admin/staff', $data);
 			    }
 			}
 		}
@@ -57,6 +58,19 @@
 			    }
 			}			
 		}
+		public function updatecuti()
+		{
+			$data = array(
+				'jeniscuti' => $this->input->post('jeniscuti'),
+				'rentangtanggal' => $this->input->post('rentangtanggal'),
+				'status' => 'approved',
+				'keterangan' => $this->input->post('keterangan'),
+				'nip' => $this->input->post('nip'),
+				'id_fakultas' => $this->input->post('id_fakultas')
+			);
+			$this->retrieve_update_cuti($data);
+			redirect(base_url('indexadmin/cuti'));
+		}		
 		public function updateabsensi()
 		{
 			$data = array(
@@ -67,6 +81,16 @@
 			$this->retrieve_update_absensi($data);
 			redirect(base_url('indexadmin/absensi'));
 		}
+		private function retrieve_update_cuti($data)
+		{
+			$api = curl_init();
+			curl_setopt($api, CURLOPT_URL, $this->urlcuti . '/updateCuti/'.$data['nip']);
+			curl_setopt($api, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($api, CURLOPT_POSTFIELDS, http_build_query($data));
+		   	$result = curl_exec($api);
+		   	$result = json_decode($result);
+		   	curl_close($api);			
+		}		
 		private function retrieve_update_absensi($data)
 		{
 			$api = curl_init();
@@ -88,13 +112,37 @@
 		  curl_close($api);
 		  return $result;			
 		}
+		public function cuti()
+		{
+			if ($this->session->userdata('logged_as') == 'admin') {
+			    if ($this->input->method() == 'get') {
+			      $cuti = $this->retrieve_cuti($this->session->userdata('id_fakultas'));
+			      $data = [
+			        'title' => 'Daftar Cuti',
+			        'json' => $cuti,
+			      ];
+			      $this->load->view('admin/cuti', $data);
+			    }
+			}
+		}
+		private function retrieve_cuti($id_fakultas)
+		{
+		  $api = curl_init();
+		  curl_setopt($api, CURLOPT_URL, $this->urlcuti . '/fetchCuti/'.$id_fakultas);
+		  curl_setopt($api, CURLOPT_RETURNTRANSFER, true);
+		  curl_setopt($api, CURLOPT_HEADER, false);
+		  $result = curl_exec($api);
+		  $result = json_decode($result);
+		  curl_close($api);
+		  return $result;			
+		}		
 		public function tambahdosen(){
 			$fakultas = $this->retrieve_list_fakultas();
 			    $data = [
 			      'title' => 'Daftar Fakultas',
 			      'json' => $fakultas,
 			    ];			
-			$this->load->view('dosen/tambahdosen',$data);
+			$this->load->view('admin/tambahdosen',$data);
 		}
 		public function tambahstaff(){
 			$fakultas = $this->retrieve_list_fakultas();
@@ -102,7 +150,7 @@
 			      'title' => 'Daftar Fakultas',
 			      'json' => $fakultas,
 			    ];			
-			$this->load->view('staff/tambahstaff',$data);
+			$this->load->view('admin/tambahstaff',$data);
 		}		
 		public function processtambahdosen(){
 			$data = array(
@@ -205,7 +253,7 @@
 			      'json' => $fakultas,
 			    ];
 			$datanya = $data + $param; 
-			$this->load->view('dosen/updatedosen', $datanya);
+			$this->load->view('admin/updatedosen', $datanya);
 		}
 		public function updatestaff(){
 			$param = array(
@@ -224,7 +272,7 @@
 			      'json' => $fakultas,
 			    ];
 			$datanya = $data + $param; 
-			$this->load->view('staff/updatestaff', $datanya);
+			$this->load->view('admin/updatestaff', $datanya);
 		}		
 		public function processupdatedosen(){
 			$data = array(

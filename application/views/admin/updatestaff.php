@@ -43,13 +43,13 @@
           <li class="active ">
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
-              <p>Daftar dosen</p>
+              <p>Daftar Dosen</p>
             </a>
           </li>
           <li>
             <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
               <i></i>
-              <p>Tambah Dosen</p>
+              <p>Tambah staff</p>
             </a>
           </li>
           <li>
@@ -63,7 +63,13 @@
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>                                  
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li>                                             
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -99,23 +105,23 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Update Dosen</h4>
+                <h4 class="card-title">Update Staff</h4>
               </div>
               <div class="card-body">
-                <?php echo form_open('indexadmin/processupdatedosen'); ?>
+                <?php echo form_open('indexadmin/processupdatestaff'); ?>
                 <form>                 
                       <div class="form-group">
-                        <label for="exampleFormControlInput1">NIP Dosen</label>
-                        <input type="text" name="nip_dosen" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" maxlength="8" value="<?php echo $nip_dosen; ?>" readonly>
-                      </div>                    
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Nama Dosen</label>
-                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30" value="<?php echo $nama; ?>">
+                        <label for="exampleFormControlInput1">NIP Staff</label>
+                        <input type="text" name="nip_staff" class="form-control" id="exampleFormControlInput1" placeholder="NIP Staff" maxlength="8" value="<?php echo $nip_staff; ?>" readonly>
                       </div>
                       <div class="form-group">
-                        <label for="exampleFormControlInput1">Kode Dosen</label>
-                        <input type="text" name="kodedosen" class="form-control" id="exampleFormControlInput1" placeholder="Kode Dosen" maxlength="3" value="<?php echo $kodedosen; ?>">
-                      </div>         
+                        <label for="exampleFormControlInput1">Jenis staff</label>
+                        <input type="text" name="jenis_staff" class="form-control" id="exampleFormControlInput1" placeholder="Kode Staff" maxlength="3" value="<?php echo $jenis_staff; ?>">
+                      </div>                                    
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Nama Staff</label>
+                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30" value="<?php echo $nama; ?>">
+                      </div>
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Alamat</label>
                         <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100" value="<?php echo $alamat; ?>">
@@ -185,33 +191,7 @@
   <script src="<?php echo base_url('assets/js/paper-dashboard.min.js?v=2.0.0') ?>" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script type="text/javascript">
- $(document).ready(function(){
-    $("table").effect("slide", "slow");
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
- $(".urldelete").click(function( event ){
-      var nip_dosen = $(event.currentTarget).attr("data-key");
-      $.ajax({
-         type:'get',
-         dataType: 'json',
-         url: 'http://localhost:8000/api/v1/hr/Dosen/removeDosen/'+nip_dosen,
-         success:function (dt) {
-          alert("AJAX request successfully completed");
-          window.location.reload(true);
-         },
-         error: function(e){
-          alert("AJAX request NOT successfully completed");
-          window.location.reload(true);
-          console.log("Gagal Hapus");
-         }
-     });
- }); 
-
-
-</script>  
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> 
 </body>
 
 </html>

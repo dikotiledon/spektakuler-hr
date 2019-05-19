@@ -40,22 +40,29 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li>
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
               <p>Daftar Dosen</p>
             </a>
           </li>
-          <li>
+          <li >
             <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
               <i></i>
-              <p>Tambah staff</p>
+              <p>Tambah Dosen</p>
             </a>
-          </li>
+          </li>            
+          <li>
           <li>
             <a href="<?php echo base_url('indexadmin/staff') ?>">
               <i></i>
               <p>Daftar Staff</p>
+            </a>
+          </li>
+          <li class="active">
+            <a href="<?php echo base_url('indexadmin/tambahstaff') ?>">
+              <i></i>
+              <p>Tambah Staff</p>
             </a>
           </li>
           <li>
@@ -63,8 +70,14 @@
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>                                  
+          </li>
           <li>
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li>                                                     
+          <li>            
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
               <p>Logout</p>
@@ -99,38 +112,38 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Update Staff</h4>
+                <h4 class="card-title">Tambah Staff</h4>
               </div>
               <div class="card-body">
-                <?php echo form_open('indexadmin/processupdatestaff'); ?>
+                <?php echo form_open('indexadmin/processtambahstaff'); ?>
                 <form>                 
                       <div class="form-group">
                         <label for="exampleFormControlInput1">NIP Staff</label>
-                        <input type="text" name="nip_staff" class="form-control" id="exampleFormControlInput1" placeholder="NIP Staff" maxlength="8" value="<?php echo $nip_staff; ?>" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Jenis staff</label>
-                        <input type="text" name="jenis_staff" class="form-control" id="exampleFormControlInput1" placeholder="Kode Staff" maxlength="3" value="<?php echo $jenis_staff; ?>">
-                      </div>                                    
+                        <input type="number" name="nip_staff" class="form-control" id="exampleFormControlInput1" placeholder="NIP Staff" maxlength="8" min="98711600" max="98711999" onKeyPress="if(this.value.length==8) return false;">
+                      </div>                    
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Nama Staff</label>
-                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30" value="<?php echo $nama; ?>">
+                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30">
                       </div>
                       <div class="form-group">
+                        <label for="exampleFormControlInput1">Jenis Staff</label>
+                        <input type="text" name="jenis_staff" class="form-control" id="exampleFormControlInput1" placeholder="Jenis Staff" maxlength="10">
+                      </div>         
+                      <div class="form-group">
                         <label for="exampleFormControlInput1">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100" value="<?php echo $alamat; ?>">
+                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100">
                       </div>         
                       <div class="form-group">
                         <label for="exampleFormControlInput1">TTL (ie: Bandung, 1 Mei 1990)</label>
-                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL" value="<?php echo $ttl; ?>">
+                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlInput1">No. HP</label>
-                        <input style="text-transform: capitalize;" type="text" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" value="<?php echo $nohp; ?>">
+                        <input style="text-transform: capitalize;" type="number" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" onKeyPress="if(this.value.length==8) return false;">
                       </div> 
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Gaji</label>
-                        <input type="text" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="11" value="<?php echo $gaji; ?>">
+                        <input type="number" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="8" onKeyPress="if(this.value.length==8) return false;">
                       </div>                                              
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Fakultas</label>
@@ -185,7 +198,7 @@
   <script src="<?php echo base_url('assets/js/paper-dashboard.min.js?v=2.0.0') ?>" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> 
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 
 </html>

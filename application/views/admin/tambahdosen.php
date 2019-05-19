@@ -15,7 +15,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" />
-
+  <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" />  
   <link href="<?php echo base_url('assets/css/paper-dashboard.css?v=2.0.0') ?>" rel="stylesheet" />
 </head>
 
@@ -40,18 +40,19 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li>
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
               <p>Daftar Dosen</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
               <i></i>
               <p>Tambah Dosen</p>
             </a>
-          </li>
+          </li>            
+          <li>
           <li>
             <a href="<?php echo base_url('indexadmin/staff') ?>">
               <i></i>
@@ -69,13 +70,13 @@
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>
+          </li> 
           <li>
             <a href="<?php echo base_url('indexadmin/cuti') ?>">
               <i></i>
               <p>Cuti</p>
             </a>
-          </li>                                                       
+          </li>                                                      
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -111,64 +112,58 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Daftar Dosen</h4>
+                <h4 class="card-title">Tambah Dosen</h4>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>NIP</th>
-                      <th>Nama</th>
-                      <th>Kode</th>
-                      <th>Alamat</th>
-                      <th>TTL</th>
-                      <th>No. HP</th>
-                      <th>Gaji</th>
-                      <th>ID FK</th>
-                      <th>Action</th>                                                                      
-                    </thead>
-                    <tbody>
-                    <?php if ($json->success): ?>
-                      <?php if (count($json->data) > 0): ?>
-                          <?php foreach($json->data as $dosen): ?>
-                            <tr>
-                              <td><?php echo $dosen->nip_dosen; ?></td>
-                              <td><?php echo $dosen->nama; ?></td>
-                              <td><?php echo $dosen->kodedosen; ?></td>
-                              <td><?php echo $dosen->alamat; ?></td>
-                              <td><?php echo $dosen->ttl; ?></td>
-                              <td><?php echo $dosen->nohp; ?></td>
-                              <td>RP.<?php echo $dosen->gaji; ?></td>
-                              <td><?php echo $dosen->id_fakultas; ?></td>
-                              <td>
-                               <?php echo form_open('indexadmin/deletedosen'); ?>
-                                  <input type="hidden" name="nipdosen" value="<?php echo $dosen->nip_dosen; ?>" required>
-                                  <input type="submit" class="btn btn-block" name="hapus" value="Hapus">
-                               <?php echo form_close(); ?>
-                               <?php echo form_open('indexadmin/updatedosen'); ?>
-                                  <span>
-                                    <input type="hidden" name="nip_dosen" value="<?php echo $dosen->nip_dosen; ?>" required>
-                                    <input type="hidden" name="nama" value="<?php echo $dosen->nama; ?>" required>
-                                    <input type="hidden" name="kodedosen" value="<?php echo $dosen->kodedosen; ?>" required>
-                                    <input type="hidden" name="alamat" value="<?php echo $dosen->alamat; ?>" required>
-                                    <input type="hidden" name="ttl" value="<?php echo $dosen->ttl; ?>" required>
-                                    <input type="hidden" name="nohp" value="<?php echo $dosen->nohp; ?>" required>
-                                    <input type="hidden" name="gaji" value="<?php echo $dosen->gaji; ?>" required>
-                                    <input type="hidden" name="fakultas" value="<?php echo $dosen->id_fakultas; ?>" required>
-                                  </span>
-                                  </br>
-                                  <span><input type="submit" class="btn btn-block" name="update" value="Update"></span>
-                               <?php echo form_close(); ?>                               
-                              </td>
-                            </tr>
-                          <?php endforeach; ?>
-                      <?php else: ?>
-                        Tidak ada data!
-                      <?php endif; ?>
-                    <?php endif; ?>
-                    </tbody>
-                  </table>
-                </div>
+                <?php echo form_open('indexadmin/processtambahdosen'); ?>
+                <form>                 
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">NIP Dosen</label>
+                        <input type="number" name="nip_dosen" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" maxlength="8" min="12345000" max="12345999" onKeyPress="if(this.value.length==8) return false;">
+                      </div>                    
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Nama Dosen</label>
+                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Kode Dosen</label>
+                        <input type="text" name="kodedosen" class="form-control" id="exampleFormControlInput1" placeholder="Kode Dosen" maxlength="3" onkeyup="this.value = this.value.toUpperCase();" >
+                      </div>         
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Alamat</label>
+                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100">
+                      </div>         
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">TTL (ie: Bandung, 1 Mei 1990)</label>
+                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">No. HP</label>
+                        <input style="text-transform: capitalize;" type="number" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" onKeyPress="if(this.value.length==8) return false;">
+                      </div> 
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Gaji</label>
+                        <input type="number" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="8" onKeyPress="if(this.value.length==8) return false;">
+                      </div>                                              
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">Fakultas</label>
+                        <select name="fakultas" class="form-control" id="exampleFormControlSelect1">
+                          <?php if ($json->success): ?>
+                            <?php if (count($json->data) > 0): ?>
+                              <?php foreach($json->data as $fakultas): ?>
+                                <option value="<?php echo $fakultas->id_fakultas; ?>"><?php echo $fakultas->id_fakultas; ?></option>
+                              <?php endforeach; ?>
+                            <?php else: ?>
+                              Tidak ada data!
+                            <?php endif; ?>
+                          <?php endif; ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <input type="submit" name="submit" class="form-control" id="exampleFormControlInput1" value="Submit">
+                      </div>                       
+                    </form>
+                    <?php echo form_close(); ?>
               </div>
             </div>
           </div>
@@ -204,6 +199,32 @@
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+    $("table").effect("slide", "slow");
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+ $(".urldelete").click(function( event ){
+      var nip_dosen = $(event.currentTarget).attr("data-key");
+      $.ajax({
+         type:'get',
+         dataType: 'json',
+         url: 'http://localhost:8000/api/v1/hr/Dosen/removeDosen/'+nip_dosen,
+         success:function (dt) {
+          alert("AJAX request successfully completed");
+          window.location.reload(true);
+         },
+         error: function(e){
+          alert("AJAX request NOT successfully completed");
+          window.location.reload(true);
+          console.log("Gagal Hapus");
+         }
+     });
+ }); 
+
+
+</script>  
 </body>
 
 </html>

@@ -15,7 +15,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" />
-  <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" />  
+
   <link href="<?php echo base_url('assets/css/paper-dashboard.css?v=2.0.0') ?>" rel="stylesheet" />
 </head>
 
@@ -46,32 +46,38 @@
               <p>Daftar Dosen</p>
             </a>
           </li>
-          <li >
+          <li>
             <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
               <i></i>
               <p>Tambah Dosen</p>
             </a>
-          </li>            
-          <li>
-          <li>
+          </li>
+          <li class="active ">
             <a href="<?php echo base_url('indexadmin/staff') ?>">
               <i></i>
               <p>Daftar Staff</p>
             </a>
           </li>
-          <li class="active">
+          <li>
             <a href="<?php echo base_url('indexadmin/tambahstaff') ?>">
               <i></i>
               <p>Tambah Staff</p>
             </a>
-          </li>
+          </li>                                
+          
           <li>
             <a href="<?php echo base_url('indexadmin/absensi') ?>">
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>                                          
-          <li>            
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li>            
+            <li>          
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
               <p>Logout</p>
@@ -106,58 +112,64 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Tambah Staff</h4>
+                <h4 class="card-title">Daftar Staff</h4>
               </div>
               <div class="card-body">
-                <?php echo form_open('indexadmin/processtambahstaff'); ?>
-                <form>                 
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">NIP Staff</label>
-                        <input type="number" name="nip_staff" class="form-control" id="exampleFormControlInput1" placeholder="NIP Staff" maxlength="8" min="98711600" max="98711999" onKeyPress="if(this.value.length==8) return false;">
-                      </div>                    
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Nama Staff</label>
-                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Jenis Staff</label>
-                        <input type="text" name="jenis_staff" class="form-control" id="exampleFormControlInput1" placeholder="Jenis Staff" maxlength="10">
-                      </div>         
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100">
-                      </div>         
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">TTL (ie: Bandung, 1 Mei 1990)</label>
-                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">No. HP</label>
-                        <input style="text-transform: capitalize;" type="number" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" onKeyPress="if(this.value.length==8) return false;">
-                      </div> 
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Gaji</label>
-                        <input type="number" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="8" onKeyPress="if(this.value.length==8) return false;">
-                      </div>                                              
-                      <div class="form-group">
-                        <label for="exampleFormControlSelect1">Fakultas</label>
-                        <select name="fakultas" class="form-control" id="exampleFormControlSelect1">
-                          <?php if ($json->success): ?>
-                            <?php if (count($json->data) > 0): ?>
-                              <?php foreach($json->data as $fakultas): ?>
-                                <option value="<?php echo $fakultas->id_fakultas; ?>"><?php echo $fakultas->id_fakultas; ?></option>
-                              <?php endforeach; ?>
-                            <?php else: ?>
-                              Tidak ada data!
-                            <?php endif; ?>
-                          <?php endif; ?>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <input type="submit" name="submit" class="form-control" id="exampleFormControlInput1" value="Submit">
-                      </div>                       
-                    </form>
-                    <?php echo form_close(); ?>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>NIP</th>
+                      <th>Jenis Staff</th>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>TTL</th>
+                      <th>No. HP</th>
+                      <th>Gaji</th>
+                      <th>ID FK</th>
+                      <th>Action</th>                                                                      
+                    </thead>
+                    <tbody>
+                    <?php if ($json->success): ?>
+                      <?php if (count($json->data) > 0): ?>
+                          <?php foreach($json->data as $staff): ?>
+                            <tr>
+                              <td><?php echo $staff->nip_staff; ?></td>
+                              <td><?php echo $staff->jenis_staff; ?></td>
+                              <td><?php echo $staff->nama; ?></td>
+                              <td><?php echo $staff->alamat; ?></td>
+                              <td><?php echo $staff->ttl; ?></td>
+                              <td><?php echo $staff->nohp; ?></td>
+                              <td>RP.<?php echo $staff->gaji; ?></td>
+                              <td><?php echo $staff->id_fakultas; ?></td>
+                              <td>
+                               <?php echo form_open('indexadmin/deletestaff'); ?>
+                                  <input type="hidden" name="nipstaff" value="<?php echo $staff->nip_staff; ?>" required>
+                                  <input type="submit" class="btn btn-block" name="hapus" value="Hapus">
+                               <?php echo form_close(); ?> 
+                             <?php echo form_open('indexadmin/updatestaff'); ?>
+                                  <span>
+                                    <input type="hidden" name="nip_staff" value="<?php echo $staff->nip_staff; ?>" required>
+                                    <input type="hidden" name="jenis_staff" value="<?php echo $staff->jenis_staff; ?>" required>
+                                    <input type="hidden" name="nama" value="<?php echo $staff->nama; ?>" required>
+                                    <input type="hidden" name="alamat" value="<?php echo $staff->alamat; ?>" required>
+                                    <input type="hidden" name="ttl" value="<?php echo $staff->ttl; ?>" required>
+                                    <input type="hidden" name="nohp" value="<?php echo $staff->nohp; ?>" required>
+                                    <input type="hidden" name="gaji" value="<?php echo $staff->gaji; ?>" required>
+                                    <input type="hidden" name="fakultas" value="<?php echo $staff->id_fakultas; ?>" required>
+                                  </span>
+                                  </br>
+                                  <span><input type="submit" class="btn btn-block" name="update" value="Update"></span>
+                               <?php echo form_close(); ?>                              
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                      <?php else: ?>
+                        Tidak ada data!
+                      <?php endif; ?>
+                    <?php endif; ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -192,7 +204,7 @@
   <script src="<?php echo base_url('assets/js/paper-dashboard.min.js?v=2.0.0') ?>" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> 
 </body>
 
 </html>

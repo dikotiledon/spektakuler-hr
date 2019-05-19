@@ -40,7 +40,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
+          <li >
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
               <p>Daftar Dosen</p>
@@ -52,7 +52,7 @@
               <p>Tambah Dosen</p>
             </a>
           </li>
-          <li class="active ">
+          <li>
             <a href="<?php echo base_url('indexadmin/staff') ?>">
               <i></i>
               <p>Daftar Staff</p>
@@ -63,15 +63,20 @@
               <i></i>
               <p>Tambah Staff</p>
             </a>
-          </li>                                
-          
+          </li>  
           <li>
             <a href="<?php echo base_url('indexadmin/absensi') ?>">
               <i></i>
               <p>Absensi</p>
             </a>
-          </li> 
-            <li>          
+          </li>
+          <li class="active ">
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li>                                                     
+          <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
               <p>Logout</p>
@@ -106,54 +111,36 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Daftar Staff</h4>
+                <h4 class="card-title">Daftar Cuti</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>NIP</th>
-                      <th>Jenis Staff</th>
-                      <th>Nama</th>
-                      <th>Alamat</th>
-                      <th>TTL</th>
-                      <th>No. HP</th>
-                      <th>Gaji</th>
-                      <th>ID FK</th>
-                      <th>Action</th>                                                                      
+                      <th>Jenis Cuti</th>
+                      <th>Keterangan</th>
+                      <th>Status</th>
+                      <th>Action</th>                                     
                     </thead>
                     <tbody>
                     <?php if ($json->success): ?>
                       <?php if (count($json->data) > 0): ?>
-                          <?php foreach($json->data as $staff): ?>
+                          <?php foreach($json->data as $cuti): ?>
                             <tr>
-                              <td><?php echo $staff->nip_staff; ?></td>
-                              <td><?php echo $staff->jenis_staff; ?></td>
-                              <td><?php echo $staff->nama; ?></td>
-                              <td><?php echo $staff->alamat; ?></td>
-                              <td><?php echo $staff->ttl; ?></td>
-                              <td><?php echo $staff->nohp; ?></td>
-                              <td>RP.<?php echo $staff->gaji; ?></td>
-                              <td><?php echo $staff->id_fakultas; ?></td>
+                              <td><?php echo $cuti->nip; ?></td>
+                              <td><?php echo $cuti->jeniscuti; ?></td>
+                              <td><?php echo $cuti->keterangan; ?></td>
+                              <td><?php echo $cuti->status; ?></td>
                               <td>
-                               <?php echo form_open('indexadmin/deletestaff'); ?>
-                                  <input type="hidden" name="nipstaff" value="<?php echo $staff->nip_staff; ?>" required>
-                                  <input type="submit" class="btn btn-block" name="hapus" value="Hapus">
-                               <?php echo form_close(); ?> 
-                             <?php echo form_open('indexadmin/updatestaff'); ?>
-                                  <span>
-                                    <input type="hidden" name="nip_staff" value="<?php echo $staff->nip_staff; ?>" required>
-                                    <input type="hidden" name="jenis_staff" value="<?php echo $staff->jenis_staff; ?>" required>
-                                    <input type="hidden" name="nama" value="<?php echo $staff->nama; ?>" required>
-                                    <input type="hidden" name="alamat" value="<?php echo $staff->alamat; ?>" required>
-                                    <input type="hidden" name="ttl" value="<?php echo $staff->ttl; ?>" required>
-                                    <input type="hidden" name="nohp" value="<?php echo $staff->nohp; ?>" required>
-                                    <input type="hidden" name="gaji" value="<?php echo $staff->gaji; ?>" required>
-                                    <input type="hidden" name="fakultas" value="<?php echo $staff->id_fakultas; ?>" required>
-                                  </span>
-                                  </br>
-                                  <span><input type="submit" class="btn btn-block" name="update" value="Update"></span>
-                               <?php echo form_close(); ?>                              
+                               <?php echo form_open('indexadmin/updatecuti'); ?> 
+                                <input type="hidden" name="jeniscuti" value="<?php echo $cuti->jeniscuti; ?>" required>
+                                <input type="hidden" name="rentangtanggal" value="<?php echo $cuti->rentangtanggal; ?>" required>
+                                <input type="hidden" name="keterangan" value="<?php echo $cuti->keterangan; ?>" required>
+                                <input type="hidden" name="nip" value="<?php echo $cuti->nip; ?>" required>
+                                <input type="hidden" name="id_fakultas" value="<?php echo $cuti->id_fakultas; ?>" required>
+                                <input type="submit" name="submit" value="Approve" class="btn">
+                               <?php echo form_close(); ?>
                               </td>
                             </tr>
                           <?php endforeach; ?>
@@ -198,7 +185,7 @@
   <script src="<?php echo base_url('assets/js/paper-dashboard.min.js?v=2.0.0') ?>" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> 
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 
 </html>

@@ -40,19 +40,18 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
+          <li class="active ">
             <a href="<?php echo base_url('indexadmin') ?>">
               <i></i>
-              <p>Daftar Dosen</p>
+              <p>Daftar dosen</p>
             </a>
           </li>
-          <li class="active">
+          <li>
             <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
               <i></i>
               <p>Tambah Dosen</p>
             </a>
-          </li>            
-          <li>
+          </li>
           <li>
             <a href="<?php echo base_url('indexadmin/staff') ?>">
               <i></i>
@@ -60,17 +59,17 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo base_url('indexadmin/tambahstaff') ?>">
-              <i></i>
-              <p>Tambah Staff</p>
-            </a>
-          </li>
-          <li>
             <a href="<?php echo base_url('indexadmin/absensi') ?>">
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>                                            
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li> s                                            
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -106,38 +105,38 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Tambah Dosen</h4>
+                <h4 class="card-title">Update Dosen</h4>
               </div>
               <div class="card-body">
-                <?php echo form_open('indexadmin/processtambahdosen'); ?>
+                <?php echo form_open('indexadmin/processupdatedosen'); ?>
                 <form>                 
                       <div class="form-group">
                         <label for="exampleFormControlInput1">NIP Dosen</label>
-                        <input type="number" name="nip_dosen" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" maxlength="8" min="12345000" max="12345999" onKeyPress="if(this.value.length==8) return false;">
+                        <input type="text" name="nip_dosen" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" maxlength="8" value="<?php echo $nip_dosen; ?>" readonly>
                       </div>                    
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Nama Dosen</label>
-                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30">
+                        <input type="text" name="nama" class="form-control" id="exampleFormControlInput1" placeholder="Nama Lengkap" maxlength="30" value="<?php echo $nama; ?>">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Kode Dosen</label>
-                        <input type="text" name="kodedosen" class="form-control" id="exampleFormControlInput1" placeholder="Kode Dosen" maxlength="3" onkeyup="this.value = this.value.toUpperCase();" >
+                        <input type="text" name="kodedosen" class="form-control" id="exampleFormControlInput1" placeholder="Kode Dosen" maxlength="3" value="<?php echo $kodedosen; ?>">
                       </div>         
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100">
+                        <input type="text" name="alamat" class="form-control" id="exampleFormControlInput1" placeholder="Alamat" maxlength="100" value="<?php echo $alamat; ?>">
                       </div>         
                       <div class="form-group">
                         <label for="exampleFormControlInput1">TTL (ie: Bandung, 1 Mei 1990)</label>
-                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL">
+                        <input type="text" name="ttl" class="form-control" id="exampleFormControlInput1" placeholder="TTL" value="<?php echo $ttl; ?>">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlInput1">No. HP</label>
-                        <input style="text-transform: capitalize;" type="number" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" onKeyPress="if(this.value.length==8) return false;">
+                        <input style="text-transform: capitalize;" type="text" name="nohp" class="form-control" id="exampleFormControlInput1" placeholder="No. HP" maxlength="11" value="<?php echo $nohp; ?>">
                       </div> 
                       <div class="form-group">
                         <label for="exampleFormControlInput1">Gaji</label>
-                        <input type="number" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="8" onKeyPress="if(this.value.length==8) return false;">
+                        <input type="text" name="gaji" class="form-control" id="exampleFormControlInput1" placeholder="Gaji" maxlength="11" value="<?php echo $gaji; ?>">
                       </div>                                              
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Fakultas</label>

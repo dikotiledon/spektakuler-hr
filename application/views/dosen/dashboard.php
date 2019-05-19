@@ -38,7 +38,17 @@
             dateFormat: "yy-mm-dd",
             minDate: 0,
             maxDate: 90,
-            });            
+            });
+            $('#datepicker4').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 3,
+            });
+            $('#datepicker5').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 7,
+            });                                    
         });
  </script>
 
@@ -74,6 +84,12 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li>
+            <a href="<?php echo base_url('indexdosen/fetchCuti') ?>">
+              <i></i>
+              <p>Status Pengajuan Cuti</p>
+            </a>
+          </li>          
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -201,11 +217,11 @@
                                 <div class="tab-pane fade" id="cuti" role="tabpanel" aria-labelledby="profile-tab">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                  <?php echo form_open('indexadmin/processtambahdosen'); ?>
+                                                  <?php echo form_open('indexdosen/cuti'); ?>
                                                   <form>                 
                                                         <div class="form-group">
                                                           <label for="exampleFormControlInput1">NIP Dosen</label>
-                                                          <input type="number" name="nip_dosen" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" value="<?php echo $this->session->userdata('nip'); ?>" readonly>
+                                                          <input type="number" name="nip" class="form-control" id="exampleFormControlInput1" placeholder="NIP Dosen" value="<?php echo $this->session->userdata('nip'); ?>" readonly>
                                                         </div>                    
                                                         <div class="form-group">
                                                           <label for="exampleFormControlInput1">Nama Dosen</label>
@@ -217,7 +233,7 @@
                                                         </div>                                                      
                                                         <div class="form-group">
                                                           <label for="exampleFormControlSelect1">Fakultas</label>
-                                                          <input type="text" name="fakultas" class="form-control" id="exampleFormControlInput1" placeholder="Fakultas" value="<?php echo $this->session->userdata('id_fakultas'); ?>" readonly>
+                                                          <input type="text" name="id_fakultas" class="form-control" id="exampleFormControlInput1" placeholder="Fakultas" value="<?php echo $this->session->userdata('id_fakultas'); ?>" readonly>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="exampleFormControlSelect1">Jenis Cuti</label>
@@ -225,29 +241,28 @@
                                                             <option value="hamil">Hamil</option>
                                                             <option value="izin">Izin</option>
                                                             <option value="sakit">Sakit</option>
-                                                            <option value="hari raya">Hari Raya</option>
+                                                            <option value="hariraya">Hari Raya</option>
                                                           </select>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="exampleFormControlSelect1">Tanggal</label>
                                                         </br>
                                                           <div id="idhamil" style="display:none;">
-                                                            <input type="text" id="datepicker3">
+                                                            <input type="text" id="datepicker3" onfocus="this.value=''" name="rentangtanggal1">
                                                           </div>
                                                           <div id="idizin" style="display:none;">
-                                                            <input type="text" id="datepicker2">
+                                                            <input type="text" id="datepicker2" onfocus="this.value=''" name="rentangtanggal2">
                                                           </div>
                                                           <div id="idsakit" style="display:none;">
-                                                            <input type="text" id="datepicker2">
+                                                            <input type="text" id="datepicker4" onfocus="this.value=''" name="rentangtanggal3">
                                                           </div> 
                                                           <div id="idhariraya" style="display:none;">
-                                                            <input type="text" id="datepicker2">
-                                                          </div>                                                                                                                                                                               
-                                                          <!-- <input type="text" id="datepicker2"> -->
-                                                        </div>                                                                               
+                                                            <input type="text" id="datepicker5" onfocus="this.value=''" name="rentangtanggal4">
+                                                          </div>                            
+                                                        </div>                                      
                                                         <div class="form-group">
                                                           <label for="exampleFormControlSelect1">Keterangan</label>
-                                                           <textarea class="md-textarea form-control"></textarea>
+                                                           <textarea class="md-textarea form-control" name="keterangan"></textarea>
                                                         </div>                                                         
                                                         <div class="form-group">
                                                           <input type="submit" name="submit" class="form-control" id="exampleFormControlInput1" value="Submit">
@@ -310,23 +325,28 @@
     $('#idizin').show();
     $('#idhamil').hide();
     $('#idsakit').hide();
-    $('#idharirayal').hide();
+    $('#idhariraya').hide();
   } else if(this.value == "hamil") {
     $('#idizin').hide();
     $('#idhamil').show();
     $('#idsakit').hide();
-    $('#idharirayal').hide();
+    $('#idhariraya').hide();
   }else if(this.value == "sakit"){
     $('#idizin').hide();
     $('#idhamil').hide();
     $('#idsakit').show();
-    $('#idharirayal').hide();
-  }else{
+    $('#idhariraya  ').hide();
+  }else if(this.value == "hariraya"){
     $('#idizin').hide();
     $('#idhamil').hide();
-    $('#idsakit').show();
+    $('#idsakit').hide();
     $('#idhariraya').show();  
   }
+});
+ </script>
+ <script type="text/javascript">
+   $("#quote_form").on("change", "#cutiselector", function(event){
+    event.delegateTarget.reset();
 });
  </script>
   <script src="<?php echo base_url('assets/js/core/popper.min.js') ?>"></script>

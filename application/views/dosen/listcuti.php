@@ -17,6 +17,44 @@
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" />
 
   <link href="<?php echo base_url('assets/css/paper-dashboard.css?v=2.0.0') ?>" rel="stylesheet" />
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <link href='<?php echo base_url('assets/js/core/jquery-ui.min.css');?>' rel='stylesheet' type='text/css'>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>  
+<script type='text/javascript'>
+        $(document).ready(function(){
+            // Number
+            $('#datepicker2').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 3,
+            });
+            $('#datepicker3').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 90,
+            });
+            $('#datepicker4').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 3,
+            });
+            $('#datepicker5').datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: 7,
+            });                                    
+        });
+ </script>
+
+ <style type="text/css">
+   #idizin, #idhamil { display: none; }
+ </style>
 </head>
 
 <body class="">
@@ -40,42 +78,18 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
+          <li >
+            <a href="<?php echo base_url('indexdosen') ?>">
+              <i></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
           <li class="active ">
-            <a href="<?php echo base_url('indexadmin') ?>">
+            <a href="<?php echo base_url('indexdosen/fetchCuti') ?>">
               <i></i>
-              <p>Daftar Dosen</p>
+              <p>Status Pengajuan Cuti</p>
             </a>
-          </li>
-          <li>
-            <a href="<?php echo base_url('indexadmin/tambahdosen') ?>">
-              <i></i>
-              <p>Tambah Dosen</p>
-            </a>
-          </li>
-          <li>
-            <a href="<?php echo base_url('indexadmin/staff') ?>">
-              <i></i>
-              <p>Daftar Staff</p>
-            </a>
-          </li>
-          <li>
-            <a href="<?php echo base_url('indexadmin/tambahstaff') ?>">
-              <i></i>
-              <p>Tambah Staff</p>
-            </a>
-          </li>
-          <li>
-            <a href="<?php echo base_url('indexadmin/absensi') ?>">
-              <i></i>
-              <p>Absensi</p>
-            </a>
-          </li>
-          <li>
-            <a href="<?php echo base_url('indexadmin/cuti') ?>">
-              <i></i>
-              <p>Cuti</p>
-            </a>
-          </li>                                                       
+          </li>          
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
@@ -111,55 +125,26 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Daftar Dosen</h4>
+                <h4 class="card-title">Daftar Pengajuan Cuti</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
-                      <th>NIP</th>
-                      <th>Nama</th>
-                      <th>Kode</th>
-                      <th>Alamat</th>
-                      <th>TTL</th>
-                      <th>No. HP</th>
-                      <th>Gaji</th>
-                      <th>ID FK</th>
-                      <th>Action</th>                                                                      
+                      <th>Jenis Cuti</th>
+                      <th>Rentang Tanggal</th>
+                      <th>Status</th>
+                      <th>Keterangan</th>                                                                 
                     </thead>
                     <tbody>
                     <?php if ($json->success): ?>
                       <?php if (count($json->data) > 0): ?>
-                          <?php foreach($json->data as $dosen): ?>
+                          <?php foreach($json->data as $cuti): ?>
                             <tr>
-                              <td><?php echo $dosen->nip_dosen; ?></td>
-                              <td><?php echo $dosen->nama; ?></td>
-                              <td><?php echo $dosen->kodedosen; ?></td>
-                              <td><?php echo $dosen->alamat; ?></td>
-                              <td><?php echo $dosen->ttl; ?></td>
-                              <td><?php echo $dosen->nohp; ?></td>
-                              <td>RP.<?php echo $dosen->gaji; ?></td>
-                              <td><?php echo $dosen->id_fakultas; ?></td>
-                              <td>
-                               <?php echo form_open('indexadmin/deletedosen'); ?>
-                                  <input type="hidden" name="nipdosen" value="<?php echo $dosen->nip_dosen; ?>" required>
-                                  <input type="submit" class="btn btn-block" name="hapus" value="Hapus">
-                               <?php echo form_close(); ?>
-                               <?php echo form_open('indexadmin/updatedosen'); ?>
-                                  <span>
-                                    <input type="hidden" name="nip_dosen" value="<?php echo $dosen->nip_dosen; ?>" required>
-                                    <input type="hidden" name="nama" value="<?php echo $dosen->nama; ?>" required>
-                                    <input type="hidden" name="kodedosen" value="<?php echo $dosen->kodedosen; ?>" required>
-                                    <input type="hidden" name="alamat" value="<?php echo $dosen->alamat; ?>" required>
-                                    <input type="hidden" name="ttl" value="<?php echo $dosen->ttl; ?>" required>
-                                    <input type="hidden" name="nohp" value="<?php echo $dosen->nohp; ?>" required>
-                                    <input type="hidden" name="gaji" value="<?php echo $dosen->gaji; ?>" required>
-                                    <input type="hidden" name="fakultas" value="<?php echo $dosen->id_fakultas; ?>" required>
-                                  </span>
-                                  </br>
-                                  <span><input type="submit" class="btn btn-block" name="update" value="Update"></span>
-                               <?php echo form_close(); ?>                               
-                              </td>
+                              <td><?php echo $cuti->jeniscuti; ?></td>
+                              <td><?php echo $cuti->rentangtanggal; ?></td>
+                              <td><?php echo $cuti->status; ?></td>
+                              <td><?php echo $cuti->keterangan; ?></td>
                             </tr>
                           <?php endforeach; ?>
                       <?php else: ?>
@@ -191,7 +176,37 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="<?php echo base_url('assets/js/core/jquery.min.js') ?>"></script>
+ <script type="text/javascript">
+   $('#cutiselector').on('change', function() {
+  //  alert( this.value ); // or $(this).val()
+  if(this.value == "izin") {
+    $('#idizin').show();
+    $('#idhamil').hide();
+    $('#idsakit').hide();
+    $('#idhariraya').hide();
+  } else if(this.value == "hamil") {
+    $('#idizin').hide();
+    $('#idhamil').show();
+    $('#idsakit').hide();
+    $('#idhariraya').hide();
+  }else if(this.value == "sakit"){
+    $('#idizin').hide();
+    $('#idhamil').hide();
+    $('#idsakit').show();
+    $('#idhariraya  ').hide();
+  }else if(this.value == "hariraya"){
+    $('#idizin').hide();
+    $('#idhamil').hide();
+    $('#idsakit').hide();
+    $('#idhariraya').show();  
+  }
+});
+ </script>
+ <script type="text/javascript">
+   $("#quote_form").on("change", "#cutiselector", function(event){
+    event.delegateTarget.reset();
+});
+ </script>
   <script src="<?php echo base_url('assets/js/core/popper.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/js/core/bootstrap.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/js/plugins/perfect-scrollbar.jquery.min.js') ?>"></script>
@@ -204,6 +219,8 @@
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
 </body>
 
 </html>

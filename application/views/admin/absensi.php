@@ -69,7 +69,13 @@
               <i></i>
               <p>Absensi</p>
             </a>
-          </li>                                         
+          </li>
+          <li>
+            <a href="<?php echo base_url('indexadmin/cuti') ?>">
+              <i></i>
+              <p>Cuti</p>
+            </a>
+          </li>                                                    
           <li>
             <a href="<?php echo base_url('cakun/logout') ?>">
               <i></i>
