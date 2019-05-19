@@ -46,7 +46,13 @@ class indexdosen extends CI_Controller
 	   	$result = json_decode($result);
 	   	curl_close($api);
 	   	return $result;			
-	}		
+	}	
+	public function cuti()
+	{
+
+		$this->load->view('dosen/dashboard');
+
+	}	
 }
 
 ?>

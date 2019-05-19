@@ -95,6 +95,10 @@ private $urladmin = 'http://localhost:8000/api/v1/hr/Admin';
 	    }elseif (isset($auth['data'][0]['nip_dosen'])) {
 	    	$data_session = array(
 			'nip' => $nip,
+			'nama' => $auth['data'][0]['nama'],
+			'alamat' => $auth['data'][0]['alamat'],
+			'ttl' => $auth['data'][0]['ttl'],
+			'nohp' => $auth['data'][0]['nohp'],
 			'id_fakultas' => $auth['data'][0]['id_fakultas'],
 			'logged' => "login",
 			'logged_as' => "dosen"
